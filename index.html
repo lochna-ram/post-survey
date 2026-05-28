@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>my.t — Post-Launch Assessment</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+:root{--brand:#185FA5;--bl:#E6F1FB;--bm:#378ADD;--teal:#0F6E56;--tl:#E1F5EE;--pur:#534AB7;--pl:#EEEDFE;--bg:#fff;--bg2:#f7f7f5;--bg3:#f0ede8;--tx:#1a1a18;--tx2:#5f5e5a;--tx3:#888780;--bdr:rgba(0,0,0,0.12);--bdr2:rgba(0,0,0,0.22);--r:8px;--rl:12px;}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c1a;--bg2:#252523;--bg3:#2e2e2b;--tx:#e8e6df;--tx2:#a8a69e;--tx3:#6e6d68;--bdr:rgba(255,255,255,0.1);--bdr2:rgba(255,255,255,0.2);--bl:#0c2a47;--bm:#1d5a9e;--tl:#042c1e;--pl:#1e1a47;}}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);min-height:100vh;padding:0;}
+.app{max-width:860px;margin:0 auto;background:var(--bg);border-radius:0 0 var(--rl) var(--rl);overflow:hidden;min-height:100vh;}
+.hdr{background:var(--brand);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-left{display:flex;align-items:center;gap:10px;}
+.hdr-logo{font-size:18px;font-weight:600;letter-spacing:-0.3px;}
+.hdr-sub{font-size:11px;opacity:0.72;margin-top:1px;}
+.hdr-role{font-size:11px;background:rgba(255,255,255,0.18);padding:3px 10px;border-radius:100px;}
+
+
+.nav{display:flex;background:var(--bg2);border-bottom:0.5px solid var(--bdr);padding:0 16px;overflow-x:auto;}
+.nt{padding:9px 14px;font-size:12px;color:var(--tx2);cursor:pointer;border-bottom:2px solid transparent;border-top:none;border-left:none;border-right:none;background:none;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;transition:all 0.15s;}
+.nt.ac{color:var(--brand);border-bottom-color:var(--brand);font-weight:500;}
+.nt.ac.tt{color:var(--teal);border-bottom-color:var(--teal);}
+.nt.ac.mm{color:var(--pur);border-bottom-color:var(--pur);}
+.vw{display:none;padding:20px;}
+.vw.ac{display:block;}
+.sh{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--tx2);padding:0 0 6px;margin:20px 0 10px;border-bottom:0.5px solid var(--bdr);}
+.sh:first-child{margin-top:0;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.fr.th{grid-template-columns:1fr 1fr 1fr;}
+.fr.fo{grid-template-columns:1fr 1fr 1fr 1fr;}
+@media(max-width:600px){.fr,.fr.th,.fr.fo{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.fr,.fr.th,.fr.fo{grid-template-columns:1fr;}}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fg label{font-size:11px;color:var(--tx2);font-weight:500;}
+.fg input,.fg select,.fg textarea{font-size:13px;padding:7px 9px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);width:100%;outline:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--brand);}
+.fg textarea{resize:vertical;min-height:52px;line-height:1.5;}
+.qb{margin-bottom:13px;}
+.ql{font-size:13px;color:var(--tx);font-weight:500;margin-bottom:6px;line-height:1.5;}
+.qn{font-weight:500;margin-right:3px;}
+.ns{color:var(--brand);}.nt2c{color:var(--teal);}.nmc{color:var(--pur);}
+.qno{font-size:11px;color:var(--tx2);font-weight:400;}
+.rg,.cg{display:flex;flex-wrap:wrap;gap:5px;}
+.ro,.co{display:flex;align-items:center;gap:5px;padding:4px 9px;border:0.5px solid var(--bdr2);border-radius:var(--r);cursor:pointer;font-size:12px;color:var(--tx);background:var(--bg);user-select:none;transition:all 0.1s;}
+.ro input,.co input{display:none;}
+.ss .ro.sel,.ss .co.sel{background:var(--bl);border-color:var(--bm);color:#0C447C;}
+.ts .ro.sel,.ts .co.sel{background:var(--tl);border-color:var(--teal);color:#085041;}
+.ms .ro.sel,.ms .co.sel{background:var(--pl);border-color:var(--pur);color:#3C3489;}
+@media(prefers-color-scheme:dark){.ss .ro.sel,.ss .co.sel{color:#85B7EB;}.ts .ro.sel,.ts .co.sel{color:#5DCAA5;}.ms .ro.sel,.ms .co.sel{color:#AFA9EC;}}
+.oi{display:none;margin-top:5px;font-size:12px;padding:5px 9px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);width:100%;}
+.oi.show{display:block;}
+.sq{margin-top:6px;padding:8px 10px;background:var(--bg2);border-left:2px solid var(--bdr2);border-radius:0 var(--r) var(--r) 0;}
+.sq .ql{font-size:12px;margin-bottom:5px;}
+.sbtn{padding:9px 22px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;margin-top:16px;border:none;display:inline-flex;align-items:center;gap:6px;transition:opacity 0.15s;}
+.sbtn.s{background:var(--brand);color:#fff;}
+.sbtn.t{background:var(--teal);color:#fff;}
+.sbtn.m{background:var(--pur);color:#fff;}
+.sbtn:hover{opacity:0.88;}
+.ok{display:none;border-radius:var(--r);padding:10px 14px;font-size:13px;margin-bottom:13px;align-items:center;gap:8px;background:#eaf3de;color:#27500a;border:0.5px solid rgba(59,109,17,0.3);}
+.ok.show{display:flex;}
+.app{display:block !important;}
+#no-role-msg{background:var(--bg);min-height:60vh;}
+.rp{display:inline-flex;align-items:center;gap:5px;border-radius:100px;padding:3px 10px;font-size:11px;font-weight:500;margin-bottom:10px;}
+.ps{background:var(--bl);color:#0C447C;}.pt{background:var(--tl);color:#085041;}.pm{background:var(--pl);color:#3C3489;}
+@media(prefers-color-scheme:dark){.ps{color:#85B7EB;}.pt{color:#5DCAA5;}.pm{color:#AFA9EC;}}
+
+@media(max-width:500px){}
+
+
+
+.flr{display:flex;gap:7px;margin-bottom:13px;flex-wrap:wrap;align-items:center;}
+.flr select,.flr input{font-size:12px;padding:5px 8px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);}
+.expbtn{font-size:12px;padding:5px 10px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;padding:7px 8px;background:var(--bg2);color:var(--tx2);font-weight:500;font-size:11px;border-bottom:0.5px solid var(--bdr);white-space:nowrap;}
+td{padding:7px 8px;border-bottom:0.5px solid var(--bdr);color:var(--tx);vertical-align:top;}
+tr:hover td{background:var(--bg2);}
+.bx{display:inline-block;padding:2px 7px;border-radius:100px;font-size:11px;font-weight:500;}
+.bb{background:#E6F1FB;color:#0C447C;}.bt{background:#E1F5EE;color:#085041;}.bm2{background:#EEEDFE;color:#3C3489;}
+.bg2c{background:#EAF3DE;color:#27500A;}.ba2{background:#FAEEDA;color:#633806;}.bz{background:#F1EFE8;color:#444441;}
+@media(prefers-color-scheme:dark){.bb{background:#0c2a47;color:#85B7EB;}.bt{background:#042c1e;color:#5DCAA5;}.bm2{background:#1e1a47;color:#AFA9EC;}.bg2c{background:#173404;color:#c0dd97;}.ba2{background:#412402;color:#fac775;}.bz{background:#2c2c2a;color:#B4B2A9;}}
+.bsel{font-size:11px;padding:3px 5px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);min-width:90px;}
+.binp{font-size:11px;padding:3px 5px;border:0.5px solid var(--bdr2);border-radius:var(--r);background:var(--bg);color:var(--tx);width:85px;}
+.es{text-align:center;padding:36px;color:var(--tx2);font-size:13px;}
+.ac2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:580px){.ac2{grid-template-columns:1fr;}}
+.ac1{margin-bottom:16px;}
+.ch-card{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--rl);padding:14px 16px;}
+.ch-title{font-size:11px;font-weight:500;color:var(--tx2);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;}
+.lgd{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:var(--tx2);}
+.lgd span{display:flex;align-items:center;gap:4px;}
+.lgd i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+.gap-flag{background:#faeeda;border:0.5px solid rgba(133,79,11,0.3);border-radius:var(--r);padding:8px 12px;font-size:12px;color:#633806;margin-bottom:8px;display:flex;align-items:flex-start;gap:7px;line-height:1.5;}
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div>
+      <div class="hdr-logo">my.t</div>
+      <div class="hdr-sub">Post-Launch Assessment Platform</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span class="hdr-role" id="hdrRole" style="display:none"></span>
+    </div>
+</div>
+
+<div class="nav" id="mainNav" style="display:none">
+  <button class="nt ac" onclick="sw('shops',0)"><i class="ti ti-building-store" aria-hidden="true"></i> Shops</button>
+  <button class="nt" onclick="sw('tech',1)"><i class="ti ti-tool" aria-hidden="true"></i> Technical</button>
+  <button class="nt" onclick="sw('mto',2)"><i class="ti ti-headset" aria-hidden="true"></i> MTO</button>
+</div>
+
+<div id="tab-shops" class="vw ss" style="display:none">
+  <div class="rp ps"><i class="ti ti-building-store" aria-hidden="true"></i> Shops / Sales frontliner</div>
+  <div id="ok-s" class="ok"><i class="ti ti-circle-check" aria-hidden="true"></i> Response submitted successfully. Thank you!</div>
+  <div class="sh">General information</div>
+  <div class="fr">
+    <div class="fg"><label>Product / Service</label>
+      <select id="s_prod">
+        <option value="">Select product / service</option>
+        <option>Work From Home Offers</option>
+        <option>my.t protect Parental Control</option>
+      </select>
+    </div>
+    <div class="fg"><label>Date of feedback</label><input type="date" id="s_date"></div>
+  </div>
+  <div class="fr th">
+    <div class="fg"><label>Staff name</label><input type="text" id="s_staff" placeholder="Full name"></div>
+    <div class="fg"><label>Shop name</label>
+      <select id="s_shop">
+        <option value="">Select shop</option>
+        <option>Bagatelle</option>
+        <option>Cascavelle</option>
+        <option>Chemin Grenier</option>
+        <option>Curepipe</option>
+        <option>Flacq</option>
+        <option>Flacq Coeur de Ville</option>
+        <option>Goodlands</option>
+        <option>Grand Baie La Croisette</option>
+        <option>Mahebourg</option>
+        <option>Phoenix</option>
+        <option>Plaine Verte</option>
+        <option>Quatre Bornes</option>
+        <option>Riche Terre</option>
+        <option>Riviere du Rempart</option>
+        <option>Rose Belle</option>
+        <option>Rose Hill</option>
+        <option>Rodrigues</option>
+        <option>SSR Airport</option>
+        <option>St Pierre</option>
+        <option>Telecom Tower</option>
+        <option>Tribeca</option>
+        <option>Trianon</option>
+        <option>Triolet</option>
+        <option>Vacoas</option>
+      </select>
+    </div>
+    <div class="fg"><label>Region</label>
+      <select id="s_region">
+        <option value="">Select</option>
+        <option>North</option><option>Central</option><option>South</option>
+      </select>
+    </div>
+  </div>
+  <div class="fr">
+    <div class="fg"><label>Date covered — from</label><input type="date" id="s_from"></div>
+    <div class="fg"><label>Date covered — to</label><input type="date" id="s_to"></div>
+  </div>
+  <div class="sh">Customer awareness & understanding</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q1.</span> Are customers generally aware of the new product/service?</div><div class="rg" id="sq1"><label class="ro"><input type="radio" name="sq1" value="Yes – Fully aware">Yes – Fully aware</label><label class="ro"><input type="radio" name="sq1" value="Partially aware">Partially aware</label><label class="ro"><input type="radio" name="sq1" value="Not aware">Not aware</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q2.</span> How do customers mainly hear about the product/service? <span class="qno">(select all)</span></div><div class="cg" id="sq2"><label class="co"><input type="checkbox" value="Social media">Social media</label><label class="co"><input type="checkbox" value="TV/Radio">TV/Radio</label><label class="co"><input type="checkbox" value="SMS">SMS</label><label class="co"><input type="checkbox" value="Website/App">Website/App</label><label class="co"><input type="checkbox" value="Shop staff">Shop staff</label><label class="co"><input type="checkbox" value="Friends/Family">Friends/Family</label><label class="co ot" data-t="sq2o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="sq2o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q3.</span> Most common customer questions?</div><textarea id="sq3" placeholder="Describe the most frequent questions..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q4.</span> Parts of the offer customers do not understand easily?</div><textarea id="sq4" placeholder="Confusing elements..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q5.</span> Are customers confusing this offer with another existing offer?</div><textarea id="sq5" placeholder="Which offers and why?"></textarea></div>
+  <div class="sh">Sales / subscription experience</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q6.</span> Is the subscription process clear and easy for staff?</div><div class="rg" id="sq6"><label class="ro"><input type="radio" name="sq6" value="Yes">Yes</label><label class="ro"><input type="radio" name="sq6" value="Partially">Partially</label><label class="ro"><input type="radio" name="sq6" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q7.</span> Average time to process one subscription</div><div class="rg" id="sq7"><label class="ro"><input type="radio" name="sq7" value="< 5 mins">&lt;5 mins</label><label class="ro"><input type="radio" name="sq7" value="5–10 mins">5–10 mins</label><label class="ro"><input type="radio" name="sq7" value="10–20 mins">10–20 mins</label><label class="ro"><input type="radio" name="sq7" value="> 20 mins">&gt;20 mins</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q8.</span> Recurring system/tool issues? <span class="qno">(select all)</span></div><div class="cg" id="sq8"><label class="co"><input type="checkbox" value="CLM">CLM</label><label class="co"><input type="checkbox" value="Payment">Payment</label><label class="co"><input type="checkbox" value="Eligibility">Eligibility</label><label class="co"><input type="checkbox" value="Provisioning">Provisioning</label><label class="co"><input type="checkbox" value="MyT">MyT</label><label class="co ot" data-t="sq8o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="sq8o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q9.</span> Describe issues observed</div><textarea id="sq9" placeholder="System or tool issues..."></textarea></div>
+  <div class="sh">Customer issues after subscription</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q10.</span> Main complaints received from customers</div><textarea id="sq10" placeholder="Most common complaints..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q11.</span> Are customers facing activation delays?</div><div class="rg" id="sq11"><label class="ro"><input type="radio" name="sq11" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="sq11" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="sq11" value="Rarely">Rarely</label><label class="ro"><input type="radio" name="sq11" value="Never">Never</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q12.</span> Are customers returning to shop after subscription?</div><div class="rg" id="sq12"><label class="ro"><input type="radio" name="sq12" value="Yes">Yes</label><label class="ro"><input type="radio" name="sq12" value="No">No</label></div><textarea id="sq12b" style="margin-top:6px;" placeholder="If yes, main reasons?"></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q13.</span> Issues related to: <span class="qno">(select all)</span></div><div class="cg" id="sq13"><label class="co"><input type="checkbox" value="Billing">Billing</label><label class="co"><input type="checkbox" value="Speed">Speed</label><label class="co"><input type="checkbox" value="TV Services">TV services</label><label class="co"><input type="checkbox" value="Installation">Installation</label><label class="co"><input type="checkbox" value="WiFi setup">WiFi setup</label><label class="co"><input type="checkbox" value="App usage">App usage</label><label class="co"><input type="checkbox" value="Comms/SMS">Comms/SMS</label><label class="co ot" data-t="sq13o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="sq13o" placeholder="Specify..."></div>
+  <div class="sh">Process & operational feedback</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q14.</span> Were staff adequately briefed/trained before launch?</div><div class="rg" id="sq14"><label class="ro"><input type="radio" name="sq14" value="Yes">Yes</label><label class="ro"><input type="radio" name="sq14" value="Partially">Partially</label><label class="ro"><input type="radio" name="sq14" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q15.</span> Is the information provided to shops sufficient?</div><div class="rg" id="sq15"><label class="ro"><input type="radio" name="sq15" value="Yes">Yes</label><label class="ro"><input type="radio" name="sq15" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q16.</span> Missing guidelines or unclear procedures?</div><textarea id="sq16" placeholder="Gaps in guidelines..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q17.</span> Are escalation paths clear?</div><div class="rg" id="sq17"><label class="ro"><input type="radio" name="sq17" value="Yes">Yes</label><label class="ro"><input type="radio" name="sq17" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q18.</span> Recurring issues between shops and back-office/support?</div><textarea id="sq18" placeholder="Coordination issues..."></textarea></div>
+  <div class="sh">Customer journey observations</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q19.</span> At which stage do most issues occur? <span class="qno">(select all)</span></div><div class="cg" id="sq19"><label class="co"><input type="checkbox" value="Enquiry">Enquiry</label><label class="co"><input type="checkbox" value="Subscription">Subscription</label><label class="co"><input type="checkbox" value="Payment">Payment</label><label class="co"><input type="checkbox" value="Provisioning">Provisioning</label><label class="co"><input type="checkbox" value="Installation">Installation</label><label class="co"><input type="checkbox" value="Activation">Activation</label><label class="co"><input type="checkbox" value="After-sales">After-sales</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q20.</span> Which part of the journey should be improved first?</div><textarea id="sq20" placeholder="Priority recommendation..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q21.</span> Repeated customer frustrations observed?</div><textarea id="sq21" placeholder="Recurring pain points..."></textarea></div>
+  <div class="sh">Recommendations</div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q22.</span> What quick improvements would help immediately?</div><textarea id="sq22" placeholder="Quick wins..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q23.</span> What should be improved for future launches?</div><textarea id="sq23" placeholder="Structural improvements..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn ns">Q24.</span> Additional comments or observations?</div><textarea id="sq24" placeholder="Any other feedback..."></textarea></div>
+  <button class="sbtn s" onclick="sub('s')"><i class="ti ti-send" aria-hidden="true"></i> Submit response</button>
+</div>
+
+<div id="tab-tech" class="vw ts" style="display:none">
+  <div class="rp pt"><i class="ti ti-tool" aria-hidden="true"></i> Technical staff</div>
+  <div id="ok-t" class="ok"><i class="ti ti-circle-check" aria-hidden="true"></i> Response submitted successfully. Thank you!</div>
+  <div class="sh">Profile</div>
+  <div class="fr fo">
+    <div class="fg"><label>Staff name</label><input type="text" id="t_staff" placeholder="Full name"></div>
+    <div class="fg"><label>Product / Service</label>
+      <select id="t_prod">
+        <option value="">Select product / service</option>
+        <option>Work From Home Offers</option>
+        <option>my.t protect Parental Control</option>
+      </select>
+    </div>
+    <div class="fg"><label>Region</label><select id="t_region"><option value="">Select</option><option>North</option><option>Central</option><option>South</option></select></div>
+    <div class="fg"><label>Date of feedback</label><input type="date" id="t_date"></div>
+  </div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q1.</span> Role</div><div class="rg" id="tq1"><label class="ro"><input type="radio" name="tq1" value="Field Technician">Field technician</label><label class="ro"><input type="radio" name="tq1" value="Field Support">Field support</label><label class="ro"><input type="radio" name="tq1" value="Supervisor">Supervisor</label><label class="ro"><input type="radio" name="tq1" value="Analytics">Analytics</label></div></div>
+  <div class="sh">Appointment coordination</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q2.</span> How are appointments assigned?</div><div class="rg" id="tq2"><label class="ro"><input type="radio" name="tq2" value="System">System-generated</label><label class="ro"><input type="radio" name="tq2" value="Manual">Manual</label><label class="ro"><input type="radio" name="tq2" value="Mixed">Mixed</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q3.</span> Main challenges in coordination? <span class="qno">(select all)</span></div><div class="cg" id="tq3"><label class="co"><input type="checkbox" value="Last-minute changes">Last-minute changes</label><label class="co"><input type="checkbox" value="Incomplete details">Incomplete details</label><label class="co"><input type="checkbox" value="Team allocation">Team allocation</label><label class="co"><input type="checkbox" value="Poor coordination">Poor coordination</label><label class="co ot" data-t="tq3o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="tq3o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q4.</span> From where do you obtain appointment lists?</div><textarea id="tq4" placeholder="Source of appointment lists..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q5.</span> Frequency of receiving appointment lists</div><div class="rg" id="tq5"><label class="ro"><input type="radio" name="tq5" value="Multiple/day">Multiple/day</label><label class="ro"><input type="radio" name="tq5" value="Daily">Daily</label><label class="ro"><input type="radio" name="tq5" value="Weekly">Weekly</label><label class="ro"><input type="radio" name="tq5" value="Ad hoc">Ad hoc</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q6.</span> Average appointments per day</div><div class="rg" id="tq6"><label class="ro"><input type="radio" name="tq6" value="< 5">&lt;5</label><label class="ro"><input type="radio" name="tq6" value="5–10">5–10</label><label class="ro"><input type="radio" name="tq6" value="10–20">10–20</label><label class="ro"><input type="radio" name="tq6" value="> 20">&gt;20</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q7.</span> <span class="qno">(Supervisor/Analytics)</span> Notable gap between scheduled vs completed?</div><textarea id="tq7" placeholder="Describe any gap and reasons..."></textarea></div>
+  <div class="sh">Pre-visit readiness</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q8.</span> Is the customer contacted prior to the visit?</div><div class="rg" id="tq8"><label class="ro"><input type="radio" name="tq8" value="Always">Always</label><label class="ro"><input type="radio" name="tq8" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq8" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q9.</span> Is specific info collected from customer before visit?</div><div class="rg" id="tq9"><label class="ro"><input type="radio" name="tq9" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq9" value="No">No</label></div><div class="sq"><textarea id="tq9b" placeholder="If yes, what info is required?"></textarea></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q10.</span> Are necessary equipment and materials available before each appointment?</div><div class="rg" id="tq10"><label class="ro"><input type="radio" name="tq10" value="Always">Always</label><label class="ro"><input type="radio" name="tq10" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq10" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q11.</span> Was the work order complete and accurate when received?</div><div class="rg" id="tq11"><label class="ro"><input type="radio" name="tq11" value="Always">Always</label><label class="ro"><input type="radio" name="tq11" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq11" value="Rarely">Rarely</label></div></div>
+  <div class="sh">On-site execution</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q12.</span> Average time to complete a standard installation/intervention</div><div class="rg" id="tq12"><label class="ro"><input type="radio" name="tq12" value="< 15 mins">&lt;15 mins</label><label class="ro"><input type="radio" name="tq12" value="15–30 mins">15–30 mins</label><label class="ro"><input type="radio" name="tq12" value="30–60 mins">30–60 mins</label><label class="ro"><input type="radio" name="tq12" value="> 60 mins">&gt;60 mins</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q13.</span> Most common on-site issues <span class="qno">(select all)</span></div><div class="cg" id="tq13"><label class="co"><input type="checkbox" value="Equipment">Equipment</label><label class="co"><input type="checkbox" value="Configuration">Configuration</label><label class="co"><input type="checkbox" value="Cabling">Cabling</label><label class="co"><input type="checkbox" value="Premises">Premises</label><label class="co"><input type="checkbox" value="Access">Access</label><label class="co ot" data-t="tq13o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="tq13o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q14.</span> How often do visits require a follow-up?</div><div class="rg" id="tq14"><label class="ro"><input type="radio" name="tq14" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="tq14" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq14" value="Rarely">Rarely</label><label class="ro"><input type="radio" name="tq14" value="Never">Never</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q15.</span> Most common reason for an incomplete visit?</div><textarea id="tq15" placeholder="Causes of incomplete visits..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q16.</span> Was the service fully tested before leaving customer premises?</div><div class="rg" id="tq16"><label class="ro"><input type="radio" name="tq16" value="Always">Always</label><label class="ro"><input type="radio" name="tq16" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq16" value="Rarely">Rarely</label></div></div>
+  <div class="sh">Customer interaction</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q17.</span> General customer reaction during visit</div><div class="rg" id="tq17"><label class="ro"><input type="radio" name="tq17" value="Very positive">Very positive</label><label class="ro"><input type="radio" name="tq17" value="Neutral">Neutral</label><label class="ro"><input type="radio" name="tq17" value="Frustrated">Frustrated</label><label class="ro"><input type="radio" name="tq17" value="Mixed">Mixed</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q18.</span> Most common customer complaint on-site?</div><textarea id="tq18" placeholder="Frequent on-site complaints..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q19.</span> Are customers well-informed before technician arrives?</div><div class="rg" id="tq19"><label class="ro"><input type="radio" name="tq19" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq19" value="Partially">Partially</label><label class="ro"><input type="radio" name="tq19" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q20.</span> Did customer receive a proper handover before technician left?</div><div class="rg" id="tq20"><label class="ro"><input type="radio" name="tq20" value="Always">Always</label><label class="ro"><input type="radio" name="tq20" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq20" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q21.</span> Could customer confirm service was working at end of visit?</div><div class="rg" id="tq21"><label class="ro"><input type="radio" name="tq21" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq21" value="Not always">Not always</label><label class="ro"><input type="radio" name="tq21" value="No">No</label></div></div>
+  <div class="sh">Coordination with other teams</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q22.</span> How often do you arrive and find the order is incomplete, incorrect or not ready?</div><div class="rg" id="tq22"><label class="ro"><input type="radio" name="tq22" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="tq22" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq22" value="Rarely">Rarely</label><label class="ro"><input type="radio" name="tq22" value="Never">Never</label></div><div class="sq"><div class="ql">Most common reason? <span class="qno">(select all)</span></div><div class="cg" id="tq22b"><label class="co"><input type="checkbox" value="Wrong address">Wrong address</label><label class="co"><input type="checkbox" value="Customer not informed">Customer not informed</label><label class="co"><input type="checkbox" value="Wrong product">Wrong product</label><label class="co"><input type="checkbox" value="Provisioning not done">Provisioning not done</label><label class="co"><input type="checkbox" value="Access not flagged">Access not flagged</label><label class="co ot" data-t="tq22bo"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="tq22bo" placeholder="Specify..."></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q23.</span> Are customer expectations set by the sales team accurate when you arrive?</div><div class="rg" id="tq23"><label class="ro"><input type="radio" name="tq23" value="Always">Always</label><label class="ro"><input type="radio" name="tq23" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq23" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q24.</span> How often do you encounter orders incorrectly processed upstream?</div><div class="rg" id="tq24"><label class="ro"><input type="radio" name="tq24" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="tq24" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="tq24" value="Rarely">Rarely</label><label class="ro"><input type="radio" name="tq24" value="Never">Never</label></div></div>
+  <div class="sh">Tools, systems & product readiness</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q25.</span> Are tools and systems sufficient?</div><div class="rg" id="tq25"><label class="ro"><input type="radio" name="tq25" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq25" value="Partially">Partially</label><label class="ro"><input type="radio" name="tq25" value="No">No</label></div><div class="sq"><textarea id="tq25b" placeholder="If not, what is missing?"></textarea></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q26.</span> Are escalation procedures clear when an issue cannot be resolved on-site?</div><div class="rg" id="tq26"><label class="ro"><input type="radio" name="tq26" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq26" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q27.</span> Were you briefed on the new product/service before first installation?</div><div class="rg" id="tq27"><label class="ro"><input type="radio" name="tq27" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq27" value="Partially">Partially</label><label class="ro"><input type="radio" name="tq27" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q28.</span> Did you encounter product behaviour not covered in training?</div><div class="rg" id="tq28"><label class="ro"><input type="radio" name="tq28" value="Yes">Yes</label><label class="ro"><input type="radio" name="tq28" value="No">No</label></div><div class="sq"><textarea id="tq28b" placeholder="If yes, describe..."></textarea></div></div>
+  <div class="sh">Recommendations</div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q29.</span> Single biggest operational improvement needed right now?</div><textarea id="tq29" placeholder="Top priority improvement..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q30.</span> What should be done differently for future launches?</div><textarea id="tq30" placeholder="Improvements for next time..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nt2c">Q31.</span> Additional comments or observations?</div><textarea id="tq31" placeholder="Any other feedback..."></textarea></div>
+  <button class="sbtn t" onclick="sub('t')"><i class="ti ti-send" aria-hidden="true"></i> Submit response</button>
+</div>
+
+<div id="tab-mto" class="vw ms" style="display:none">
+  <div class="rp pm"><i class="ti ti-headset" aria-hidden="true"></i> MTO / Contact centre</div>
+  <div id="ok-m" class="ok"><i class="ti ti-circle-check" aria-hidden="true"></i> Response submitted successfully. Thank you!</div>
+  <div class="sh">Profile</div>
+  <div class="fr fo">
+    <div class="fg"><label>Agent name</label><input type="text" id="m_staff" placeholder="Full name"></div>
+    <div class="fg"><label>Product / Service</label>
+      <select id="m_prod">
+        <option value="">Select product / service</option>
+        <option>Work From Home Offers</option>
+        <option>my.t protect Parental Control</option>
+      </select>
+    </div>
+    <div class="fg"><label>Region</label><select id="m_region"><option value="">Select</option><option>North</option><option>Central</option><option>South</option></select></div>
+    <div class="fg"><label>Date of feedback</label><input type="date" id="m_date"></div>
+  </div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q1.</span> Role</div><div class="rg" id="mq1"><label class="ro"><input type="radio" name="mq1" value="CC Agent">CC Agent</label><label class="ro"><input type="radio" name="mq1" value="Back Office Processor">Back office processor</label><label class="ro"><input type="radio" name="mq1" value="Team Leader">Team leader/supervisor</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q2.</span> Primary function <span class="qno">(select all)</span></div><div class="cg" id="mq2"><label class="co"><input type="checkbox" value="Inbound calls">Inbound calls</label><label class="co"><input type="checkbox" value="Outbound calls">Outbound calls</label><label class="co"><input type="checkbox" value="Online processing">Online processing</label><label class="co"><input type="checkbox" value="Complaints">Complaints</label><label class="co"><input type="checkbox" value="Mixed">Mixed</label></div></div>
+  <div class="sh">Customer enquiries & awareness</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q3.</span> Volume of contacts related to this product since launch?</div><div class="rg" id="mq3"><label class="ro"><input type="radio" name="mq3" value="Much higher than expected">Much higher than expected</label><label class="ro"><input type="radio" name="mq3" value="As expected">As expected</label><label class="ro"><input type="radio" name="mq3" value="Lower than expected">Lower than expected</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q4.</span> Most frequent reasons customers contact MTO? <span class="qno">(select all)</span></div><div class="cg" id="mq4"><label class="co"><input type="checkbox" value="Product info">Product info</label><label class="co"><input type="checkbox" value="Eligibility">Eligibility</label><label class="co"><input type="checkbox" value="App status">App status</label><label class="co"><input type="checkbox" value="Activation">Activation</label><label class="co"><input type="checkbox" value="Billing">Billing</label><label class="co"><input type="checkbox" value="Technical">Technical</label><label class="co"><input type="checkbox" value="Complaints">Complaints</label><label class="co"><input type="checkbox" value="Cancellation">Cancellation</label><label class="co ot" data-t="mq4o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq4o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q5.</span> Are customers generally well-informed when they contact MTO?</div><div class="rg" id="mq5"><label class="ro"><input type="radio" name="mq5" value="Yes – well informed">Yes</label><label class="ro"><input type="radio" name="mq5" value="Partially informed">Partially</label><label class="ro"><input type="radio" name="mq5" value="No – little awareness">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q6.</span> Most common questions customers ask?</div><textarea id="mq6" placeholder="Frequent customer questions..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q7.</span> Are customers confusing this product with another offer?</div><div class="rg" id="mq7"><label class="ro"><input type="radio" name="mq7" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="mq7" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="mq7" value="Rarely">Rarely</label></div><div class="sq"><textarea id="mq7b" placeholder="If yes, which offer and why?"></textarea></div></div>
+  <div class="sh">Outbound sales activity</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q8.</span> Average outbound calls per agent per day?</div><div class="rg" id="mq8"><label class="ro"><input type="radio" name="mq8" value="< 20">&lt;20</label><label class="ro"><input type="radio" name="mq8" value="20–40">20–40</label><label class="ro"><input type="radio" name="mq8" value="40–60">40–60</label><label class="ro"><input type="radio" name="mq8" value="> 60">&gt;60</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q9.</span> Current conversion rate on outbound calls?</div><div class="rg" id="mq9"><label class="ro"><input type="radio" name="mq9" value="< 10%">&lt;10%</label><label class="ro"><input type="radio" name="mq9" value="10–25%">10–25%</label><label class="ro"><input type="radio" name="mq9" value="25–50%">25–50%</label><label class="ro"><input type="radio" name="mq9" value="> 50%">&gt;50%</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q10.</span> Main reasons customers decline during outbound calls? <span class="qno">(select all)</span></div><div class="cg" id="mq10"><label class="co"><input type="checkbox" value="Price too high">Price too high</label><label class="co"><input type="checkbox" value="Has similar product">Has similar</label><label class="co"><input type="checkbox" value="Needs more info">Needs more info</label><label class="co"><input type="checkbox" value="Bad timing">Bad timing</label><label class="co"><input type="checkbox" value="Prefers shop">Prefers shop</label><label class="co"><input type="checkbox" value="Prefers online">Prefers online</label><label class="co"><input type="checkbox" value="No interest">No interest</label><label class="co ot" data-t="mq10o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq10o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q11.</span> Most effective pitch that generates customer interest?</div><textarea id="mq11" placeholder="What works best during outbound calls..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q12.</span> Are outbound call scripts/guidelines adequate?</div><div class="rg" id="mq12"><label class="ro"><input type="radio" name="mq12" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq12" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq12" value="No">No</label></div><div class="sq"><textarea id="mq12b" placeholder="If not, what needs improving?"></textarea></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q13.</span> Are leads/target lists of sufficient quality?</div><div class="rg" id="mq13"><label class="ro"><input type="radio" name="mq13" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq13" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq13" value="No">No</label></div><div class="sq"><div class="ql">If not, main issue? <span class="qno">(select all)</span></div><div class="cg" id="mq13b"><label class="co"><input type="checkbox" value="Outdated contacts">Outdated contacts</label><label class="co"><input type="checkbox" value="Wrong segment">Wrong segment</label><label class="co"><input type="checkbox" value="Existing customers">Existing customers</label><label class="co"><input type="checkbox" value="Insufficient volume">Insufficient volume</label><label class="co ot" data-t="mq13bo"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq13bo" placeholder="Specify..."></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q14.</span> Most common objection and how it is currently handled?</div><textarea id="mq14" placeholder="Main objection and handling approach..."></textarea></div>
+  <div class="sh">Online application processing</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q15.</span> Are online/app applications coming through complete and without errors?</div><div class="rg" id="mq15"><label class="ro"><input type="radio" name="mq15" value="Always">Always</label><label class="ro"><input type="radio" name="mq15" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="mq15" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q16.</span> Most common errors in online applications? <span class="qno">(select all)</span></div><div class="cg" id="mq16"><label class="co"><input type="checkbox" value="Missing info">Missing info</label><label class="co"><input type="checkbox" value="Wrong product">Wrong product</label><label class="co"><input type="checkbox" value="Payment failure">Payment failure</label><label class="co"><input type="checkbox" value="Eligibility issue">Eligibility</label><label class="co"><input type="checkbox" value="Duplicates">Duplicates</label><label class="co"><input type="checkbox" value="System errors">System errors</label><label class="co ot" data-t="mq16o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq16o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q17.</span> Average processing time for a complete application?</div><div class="rg" id="mq17"><label class="ro"><input type="radio" name="mq17" value="< 10 mins">&lt;10 mins</label><label class="ro"><input type="radio" name="mq17" value="10–20 mins">10–20 mins</label><label class="ro"><input type="radio" name="mq17" value="20–30 mins">20–30 mins</label><label class="ro"><input type="radio" name="mq17" value="> 30 mins">&gt;30 mins</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q18.</span> Average processing time when application has errors?</div><div class="rg" id="mq18"><label class="ro"><input type="radio" name="mq18" value="< 30 mins">&lt;30 mins</label><label class="ro"><input type="radio" name="mq18" value="30–60 mins">30–60 mins</label><label class="ro"><input type="radio" name="mq18" value="> 60 mins">&gt;60 mins</label><label class="ro"><input type="radio" name="mq18" value="Not same day">Not same day</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q19.</span> What percentage of online applications require manual intervention?</div><div class="rg" id="mq19"><label class="ro"><input type="radio" name="mq19" value="< 10%">&lt;10%</label><label class="ro"><input type="radio" name="mq19" value="10–25%">10–25%</label><label class="ro"><input type="radio" name="mq19" value="25–50%">25–50%</label><label class="ro"><input type="radio" name="mq19" value="> 50%">&gt;50%</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q20.</span> Are back office processing guidelines clear and sufficient?</div><div class="rg" id="mq20"><label class="ro"><input type="radio" name="mq20" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq20" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq20" value="No">No</label></div><div class="sq"><textarea id="mq20b" placeholder="If not, what is missing?"></textarea></div></div>
+  <div class="sh">Complaints handling</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q21.</span> Main category of complaints received since launch? <span class="qno">(select all)</span></div><div class="cg" id="mq21"><label class="co"><input type="checkbox" value="Activation delays">Activation delays</label><label class="co"><input type="checkbox" value="Billing errors">Billing errors</label><label class="co"><input type="checkbox" value="Speed/performance">Speed/performance</label><label class="co"><input type="checkbox" value="Installation">Installation</label><label class="co"><input type="checkbox" value="Wrong product">Wrong product</label><label class="co"><input type="checkbox" value="Poor communication">Poor comms</label><label class="co"><input type="checkbox" value="App/portal">App/portal</label><label class="co"><input type="checkbox" value="Not working post-activation">Not working post-activation</label><label class="co ot" data-t="mq21o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq21o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q22.</span> Average resolution time for a complaint?</div><div class="rg" id="mq22"><label class="ro"><input type="radio" name="mq22" value="Same day">Same day</label><label class="ro"><input type="radio" name="mq22" value="1–3 days">1–3 days</label><label class="ro"><input type="radio" name="mq22" value="3–7 days">3–7 days</label><label class="ro"><input type="radio" name="mq22" value="> 7 days">&gt;7 days</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q23.</span> Are agents equipped to resolve complaints at first contact?</div><div class="rg" id="mq23"><label class="ro"><input type="radio" name="mq23" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq23" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq23" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q24.</span> Most common reason a complaint cannot be resolved at first contact? <span class="qno">(select all)</span></div><div class="cg" id="mq24"><label class="co"><input type="checkbox" value="Needs technical">Needs technical</label><label class="co"><input type="checkbox" value="Needs back office">Needs back office</label><label class="co"><input type="checkbox" value="System pending">System pending</label><label class="co"><input type="checkbox" value="Escalation needed">Escalation needed</label><label class="co"><input type="checkbox" value="No resolution path">No resolution path</label><label class="co ot" data-t="mq24o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq24o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q25.</span> Are there recurring complaints indicating a systemic issue?</div><div class="rg" id="mq25"><label class="ro"><input type="radio" name="mq25" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq25" value="No">No</label></div><div class="sq"><textarea id="mq25b" placeholder="If yes, describe the pattern..."></textarea></div></div>
+  <div class="sh">Systems, coordination & training</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q26.</span> Are systems performing adequately?</div><div class="rg" id="mq26"><label class="ro"><input type="radio" name="mq26" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq26" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq26" value="No">No</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q27.</span> Most frequent system issues? <span class="qno">(select all)</span></div><div class="cg" id="mq27"><label class="co"><input type="checkbox" value="CRM not updated">CRM not updated</label><label class="co"><input type="checkbox" value="Slow response">Slow response</label><label class="co"><input type="checkbox" value="Portal errors">Portal errors</label><label class="co"><input type="checkbox" value="Wrong eligibility">Wrong eligibility</label><label class="co"><input type="checkbox" value="Payment issues">Payment issues</label><label class="co"><input type="checkbox" value="No order visibility">No order visibility</label><label class="co ot" data-t="mq27o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq27o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q28.</span> Do agents have real-time visibility on order/application status?</div><div class="rg" id="mq28"><label class="ro"><input type="radio" name="mq28" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq28" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq28" value="No">No</label></div><div class="sq"><textarea id="mq28b" placeholder="If no, what is the impact?"></textarea></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q29.</span> How frequently do contacts need escalating to another team?</div><div class="rg" id="mq29"><label class="ro"><input type="radio" name="mq29" value="Frequently">Frequently</label><label class="ro"><input type="radio" name="mq29" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="mq29" value="Rarely">Rarely</label><label class="ro"><input type="radio" name="mq29" value="Never">Never</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q30.</span> Which teams are most frequently escalated to? <span class="qno">(select all)</span></div><div class="cg" id="mq30"><label class="co"><input type="checkbox" value="Technical/field">Technical/field</label><label class="co"><input type="checkbox" value="Shops">Shops</label><label class="co"><input type="checkbox" value="Provisioning">Provisioning</label><label class="co"><input type="checkbox" value="Billing">Billing</label><label class="co"><input type="checkbox" value="IT">IT</label><label class="co ot" data-t="mq30o"><input type="checkbox" value="Other">Other</label></div><input class="oi" id="mq30o" placeholder="Specify..."></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q31.</span> Is the feedback loop effective — resolutions communicated back to MTO?</div><div class="rg" id="mq31"><label class="ro"><input type="radio" name="mq31" value="Always">Always</label><label class="ro"><input type="radio" name="mq31" value="Sometimes">Sometimes</label><label class="ro"><input type="radio" name="mq31" value="Rarely">Rarely</label></div></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q32.</span> Were agents adequately trained on the new product before launch?</div><div class="rg" id="mq32"><label class="ro"><input type="radio" name="mq32" value="Yes">Yes</label><label class="ro"><input type="radio" name="mq32" value="Partially">Partially</label><label class="ro"><input type="radio" name="mq32" value="No">No</label></div></div>
+  <div class="sh">Recommendations</div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q33.</span> Single biggest issue impacting MTO efficiency or customer satisfaction?</div><textarea id="mq33" placeholder="Top priority issue..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q34.</span> Quick fixes that would immediately improve contact handling?</div><textarea id="mq34" placeholder="Quick wins..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q35.</span> What should be done differently for future product launches from an MTO perspective?</div><textarea id="mq35" placeholder="Improvements for next launches..."></textarea></div>
+  <div class="qb"><div class="ql"><span class="qn nmc">Q36.</span> Additional comments or observations?</div><textarea id="mq36" placeholder="Any other feedback..."></textarea></div>
+  <button class="sbtn m" onclick="sub('m')"><i class="ti ti-send" aria-hidden="true"></i> Submit response</button>
+</div>
+
+</div>
+<script>
+const PA_URL='https://defaultadef768f802849c3a9d8d7713712a7.7f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/2b45180560194ffaadaa5edd8f5b4f61/triggers/manual/paths/invoke?api-version=1';
+const SECRET='myt2026secure';
+let ROLE='';
+
+function getRole(){
+  const p=new URLSearchParams(window.location.search);
+  return p.get('role')||'';
+}
+
+function initApp(){
+  ROLE=getRole();
+  const nav=document.getElementById('mainNav');
+  const hdrRole=document.getElementById('hdrRole');
+  if(!ROLE){
+    // No role in URL — show a neutral landing page message
+    document.getElementById('no-role-msg').style.display='flex';
+    return;
+  }
+  nav.style.display='flex';
+  const roleLabels={shops:'Shops / Sales frontliner',tech:'Technical staff',mto:'MTO / Contact centre'};
+  hdrRole.textContent=roleLabels[ROLE]||'';
+  hdrRole.style.display='block';
+  if(ROLE==='shops'){showTab('shops',0);}
+  else if(ROLE==='tech'){showTab('tech',1);}
+  else if(ROLE==='mto'){showTab('mto',2);}
+  const btns=document.querySelectorAll('.nt');
+  btns[0].style.display=ROLE==='shops'?'':'none';
+  btns[1].style.display=ROLE==='tech'?'':'none';
+  btns[2].style.display=ROLE==='mto'?'':'none';
+}
+
+function showTab(name,idx){
+  ['shops','tech','mto'].forEach(t=>{
+    const el=document.getElementById('tab-'+t);
+    if(el){el.style.display='none';el.classList.remove('ac');}
+  });
+  const el=document.getElementById('tab-'+name);
+  if(el){el.style.display='block';el.classList.add('ac');}
+  document.querySelectorAll('.nt').forEach((b,i)=>{
+    b.classList.remove('ac','tt','mm');
+    if(i===idx){b.classList.add('ac');if(idx===1)b.classList.add('tt');if(idx===2)b.classList.add('mm');}
+  });
+}
+
+function sw(n,i){showTab(n,i);}
+
+function initG(sel){
+  document.querySelectorAll(sel+' .rg').forEach(g=>{
+    g.addEventListener('click',function(e){
+      const o=e.target.closest('.ro');
+      if(!o)return;
+      e.preventDefault();
+      g.querySelectorAll('.ro').forEach(x=>{x.classList.remove('sel');x.querySelector('input').checked=false;});
+      o.classList.add('sel');
+      o.querySelector('input').checked=true;
+    });
+  });
+  document.querySelectorAll(sel+' .cg').forEach(g=>{
+    g.addEventListener('click',function(e){
+      const o=e.target.closest('.co');
+      if(!o)return;
+      e.preventDefault();
+      const inp=o.querySelector('input');
+      const newState=!inp.checked;
+      inp.checked=newState;
+      o.classList.toggle('sel',newState);
+      if(o.classList.contains('ot')){const t=o.dataset.t;if(t)document.getElementById(t).classList.toggle('show',newState);}
+    });
+  });
+}
+initG('#tab-shops');initG('#tab-tech');initG('#tab-mto');
+
+function gR(n){const e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:'';}
+function gC(id){const v=[];document.querySelectorAll('#'+id+' input[type=checkbox]:checked').forEach(c=>v.push(c.value));return v.join(', ');}
+function gV(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function clr(sel){
+  document.querySelectorAll(sel+' input[type=text],'+sel+' input[type=date],'+sel+' textarea,'+sel+' select').forEach(e=>e.value='');
+  document.querySelectorAll(sel+' .ro.sel,'+sel+' .co.sel').forEach(e=>e.classList.remove('sel'));
+  document.querySelectorAll(sel+' .oi.show').forEach(e=>e.classList.remove('show'));
+}
+
+async function sendToSharePoint(rec){
+  try{
+    // GET request with query params — no CORS issues at all
+    const params = new URLSearchParams({
+      role: rec.role||'',
+      product: rec.product||'',
+      staff: rec.staff||'',
+      shop: rec.shop||'',
+      region: rec.region||'',
+      date: rec.date||'',
+      keyFinding: (rec.keyFinding||'').substring(0,200),
+      training: rec.training||'',
+      awareness: rec.awareness||'',
+      activationDelay: rec.activationDelay||'',
+      returnToShop: rec.returnToShop||'',
+      incompleteVisit: rec.incomplete_visit||'',
+      orderIssues: rec.order_issues||'',
+      submittedAt: rec.submittedAt||''
+    });
+    const url = PA_URL + '&' + params.toString();
+    const img = new Image();
+    img.src = url;
+    // Also try fetch with no-cors as backup
+    fetch(url, {method:'GET', mode:'no-cors'}).catch(()=>{});
+    return true;
+  }catch(e){
+    console.error('Submission error:',e);
+    return false;
+  }
+}
+
+async function sub(role){
+  let rec={id:Date.now(),submittedAt:new Date().toISOString(),role:'',product:'',staff:'',shop:'',region:'',keyFinding:'',training:'',awareness:'',activationDelay:'',returnToShop:'',incomplete_visit:'',order_issues:''};
+  const tabName={s:'shops',t:'tech',m:'mto'}[role];
+  const btnSel='#tab-'+tabName+' .sbtn';
+  const btn=document.querySelector(btnSel);
+
+  if(role==='s'){
+    if(!gV('s_prod')||!gV('s_staff')){alert('Please select a product/service and enter your name.');return;}
+    Object.assign(rec,{role:'Shops',product:gV('s_prod'),staff:gV('s_staff'),shop:gV('s_shop'),region:gV('s_region'),date:gV('s_date'),training:gR('sq14'),awareness:gR('sq1'),activationDelay:gR('sq11'),returnToShop:gR('sq12'),keyFinding:gV('sq10')||gV('sq22')||gV('sq3')||''});
+  } else if(role==='t'){
+    if(!gV('t_prod')||!gV('t_staff')){alert('Please select a product/service and enter your name.');return;}
+    Object.assign(rec,{role:'Technical Staff',product:gV('t_prod'),staff:gV('t_staff'),region:gV('t_region'),date:gV('t_date'),training:gR('tq27'),incomplete_visit:gR('tq14'),order_issues:gR('tq22'),keyFinding:gV('tq18')||gV('tq29')||gV('tq15')||''});
+  } else {
+    if(!gV('m_prod')||!gV('m_staff')){alert('Please select a product/service and enter your name.');return;}
+    Object.assign(rec,{role:'MTO',product:gV('m_prod'),staff:gV('m_staff'),region:gV('m_region'),date:gV('m_date'),training:gR('mq32'),awareness:gR('mq5'),keyFinding:gV('mq33')||gV('mq25b')||gV('mq6')||''});
+  }
+
+  if(btn){btn.innerHTML='<i class="ti ti-loader-2" aria-hidden="true"></i> Submitting...';btn.disabled=true;}
+
+  const ok = await sendToSharePoint(rec);
+
+  const btnColors={s:'sbtn s',t:'sbtn t',m:'sbtn m'};
+  if(btn){btn.innerHTML='<i class="ti ti-send" aria-hidden="true"></i> Submit response';btn.disabled=false;}
+
+  if(!ok){
+    alert('Submission failed. Please check your connection and try again.');
+    return;
+  }
+
+  clr('#tab-'+tabName);
+  const banner=document.getElementById('ok-'+role);
+  if(banner){banner.classList.add('show');setTimeout(()=>banner.classList.remove('show'),6000);}
+}
+
+document.addEventListener('DOMContentLoaded', function(){ initApp(); });
+</script>
+</body>
+</html>
